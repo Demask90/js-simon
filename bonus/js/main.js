@@ -1,8 +1,6 @@
-// Esponi 5 numeri generati casualmente.
+// Esponi 5 numeri random che vengono visualizzati uno alla volta per 3 secondi.
 
-// Da li parte un timer di 10 secondi.
-
-// Dopo 30 secondi l'utente deve inserire, uno alla volta, i numeri che ha visto precedentemente, tramite il prompt().
+// dopo aver visualizzato l' ultimo numero parte un timer di 10 secondi per poter inserire tutti i numeri altrimenti perdi.
 
 // Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
 
@@ -16,6 +14,7 @@ let Start_nbr_rdn_pc = 0;
 let End_nbr_rdn_pc = 100;
 let nbr_play = 5;
 let arr_nbr_rdn_pc = [];
+let point = 0;
 
 while (y < nbr_play) {
     nbr_rdn_pc = getRndInteger(Start_nbr_rdn_pc, End_nbr_rdn_pc);
@@ -35,22 +34,23 @@ let arr_nbr_user = [];
 function myFunction() {
 
     for (let i = 0; i < nbr_play; i++) {
+        document.getElementById('memorize').style.display = 'none';
         document.getElementById('number_arr_pc').style.display = 'none';
         let nbr_user = parseInt(prompt("inserisci uno dei numeri che hai visto")) 
         let check_nbr_user = contains(arr_nbr_user, nbr_user)
         let check_nbr_user_pc = contains(arr_nbr_rdn_pc, nbr_user)
         if (check_nbr_user == false && check_nbr_user_pc == true) {
             arr_nbr_user.push(nbr_user);
+            point += 1;
         }
     }
     if (arr_nbr_user.length == arr_nbr_rdn_pc.length) {
-        alert('Hai indovinato tutti i numeri! Bravo!')
+        document.getElementById("result").innerHTML = 'Hai indovinato tutti i numeri! Bravo!'
     } else 
-        alert('Hai sbagliato! ecco i numeri che dovevi inserire: ' + arr_nbr_rdn_pc)
-}
-
-
-
+        document.getElementById("result").innerHTML = 'Hai sbagliato! ecco i numeri che dovevi inserire: ' + arr_nbr_rdn_pc;
+        document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
+        document.getElementById("correct_nbr").innerHTML =  'I numeri che hai inserito correttamente sono: ' + arr_nbr_user;
+    }
 
 // FUNZIONI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
