@@ -8,7 +8,8 @@
 
 
 
-setTimeout (myFunction, 10000);
+setTimeout(myFunction, 12000);
+
 let y = 0;
 let Start_nbr_rdn_pc = 0;
 let End_nbr_rdn_pc = 100;
@@ -21,21 +22,25 @@ while (y < nbr_play) {
     let check_nbr_rdn_pc = contains(arr_nbr_rdn_pc, nbr_rdn_pc)
     if (check_nbr_rdn_pc == false) {
         arr_nbr_rdn_pc.push(nbr_rdn_pc);
-    y++;
+        y++;
     }
 }
 
-document.getElementById("number_arr_pc").innerHTML = arr_nbr_rdn_pc;
+let z = 0;
+let clock_nbr_pc = setInterval(ClockStartFunction, 2000)
+function ClockStartFunction() {
+    document.getElementById("number_arr_pc").innerHTML = arr_nbr_rdn_pc[z];
+    z++
+}
 
 console.log(arr_nbr_rdn_pc);
 
 let arr_nbr_user = [];
 
 function myFunction() {
-
+    document.getElementById('memorize').style.display = 'none';
+    document.getElementById('number_arr_pc').style.display = 'none';
     for (let i = 0; i < nbr_play; i++) {
-        document.getElementById('memorize').style.display = 'none';
-        document.getElementById('number_arr_pc').style.display = 'none';
         let nbr_user = parseInt(prompt("inserisci uno dei numeri che hai visto")) 
         let check_nbr_user = contains(arr_nbr_user, nbr_user)
         let check_nbr_user_pc = contains(arr_nbr_rdn_pc, nbr_user)
@@ -46,11 +51,12 @@ function myFunction() {
     }
     if (arr_nbr_user.length == arr_nbr_rdn_pc.length) {
         document.getElementById("result").innerHTML = 'Hai indovinato tutti i numeri! Bravo!'
+        document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
     } else 
         document.getElementById("result").innerHTML = 'Hai sbagliato! ecco i numeri che dovevi inserire: ' + arr_nbr_rdn_pc;
         document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
         document.getElementById("correct_nbr").innerHTML =  'I numeri che hai inserito correttamente sono: ' + arr_nbr_user;
-    }
+}
 
 // FUNZIONI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -59,7 +65,7 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
   }
   
-// funzione che mi permette di verificare se i numeri non siano già stati usati all' interno di uno specifico array.
+// funzione che mi permette di verificare se i numeri non siano/siano già stati usati all' interno di uno specifico array.
 function contains(a, obj) {
     for (var i = 0; i < a.length; i++)
         if (a[i] === obj) 
