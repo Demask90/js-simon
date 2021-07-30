@@ -8,56 +8,61 @@
 
 
 
-setTimeout(myFunction, 12000);
+
 
 let y = 0;
-let Start_nbr_rdn_pc = 0;
-let End_nbr_rdn_pc = 100;
-let nbr_play = 5;
+const Start_nbr_rdn_pc = 0;
+const End_nbr_rdn_pc = 100;
+const nbr_play = 5;
 let arr_nbr_rdn_pc = [];
 let point = 0;
 
-while (y < nbr_play) {
+while (arr_nbr_rdn_pc.length < nbr_play) {
     nbr_rdn_pc = getRndInteger(Start_nbr_rdn_pc, End_nbr_rdn_pc);
-    let check_nbr_rdn_pc = contains(arr_nbr_rdn_pc, nbr_rdn_pc)
-    if (check_nbr_rdn_pc == false) {
+    if (arr_nbr_rdn_pc.includes(nbr_rdn_pc) == false)
         arr_nbr_rdn_pc.push(nbr_rdn_pc);
-        y++;
     }
-}
+    
+btn_start.addEventListener('click',
 
-let z = 0;
-let clock_nbr_pc = setInterval(ClockStartFunction, 2000)
-function ClockStartFunction() {
-    document.getElementById("number_arr_pc").innerHTML = arr_nbr_rdn_pc[z];
-    z++
-}
+    function() {
 
-console.log(arr_nbr_rdn_pc);
-
-let arr_nbr_user = [];
-
-function myFunction() {
-    document.getElementById('memorize').style.display = 'none';
-    document.getElementById('number_arr_pc').style.display = 'none';
-    for (let i = 0; i < nbr_play; i++) {
-        let nbr_user = parseInt(prompt("inserisci uno dei numeri che hai visto")) 
-        let check_nbr_user = contains(arr_nbr_user, nbr_user)
-        let check_nbr_user_pc = contains(arr_nbr_rdn_pc, nbr_user)
-        if (check_nbr_user == false && check_nbr_user_pc == true) {
-            arr_nbr_user.push(nbr_user);
-            point += 1;
+        let z = 0;
+        let clock_nbr_pc = setInterval(ClockStartFunction, 2000)
+        document.getElementById('memorize').style.display = 'block';
+        function ClockStartFunction() {
+            document.getElementById("number_arr_pc").innerHTML = arr_nbr_rdn_pc[z];
+            z++
         }
-    }
-    if (arr_nbr_user.length == arr_nbr_rdn_pc.length) {
-        document.getElementById("result").innerHTML = 'Hai indovinato tutti i numeri! Bravo!'
-        document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
-    } else 
-        document.getElementById("result").innerHTML = 'Hai sbagliato! ecco i numeri che dovevi inserire: ' + arr_nbr_rdn_pc;
-        document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
-        document.getElementById("correct_nbr").innerHTML =  'I numeri che hai inserito correttamente sono: ' + arr_nbr_user;
-}
 
+        console.log(arr_nbr_rdn_pc);
+
+        let arr_nbr_user = [];
+
+        setTimeout(myFunction, 12000);
+
+        function myFunction() {
+            document.getElementById('memorize').style.display = 'none';
+            document.getElementById('number_arr_pc').style.display = 'none';
+            for (let i = 0; i < nbr_play; i++) {
+                let nbr_user = parseInt(prompt("inserisci uno dei numeri che hai visto")) 
+                if (arr_nbr_user.includes(nbr_user) == false && arr_nbr_rdn_pc.includes(nbr_user) == true) {
+                    arr_nbr_user.push(nbr_user);
+                    point += 1;
+                }
+            }
+            if (arr_nbr_user.length == arr_nbr_rdn_pc.length) {
+                document.getElementById("result").innerHTML = 'Hai indovinato tutti i numeri! Bravo!'
+                document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
+            } else {
+                document.getElementById("result").innerHTML = 'Hai sbagliato! ecco i numeri che dovevi inserire: ' + arr_nbr_rdn_pc;
+                document.getElementById("point").innerHTML =  'Il tuo punteggio totale è: ' + point; 
+                document.getElementById("correct_nbr").innerHTML =  'I numeri che hai inserito correttamente sono: ' + arr_nbr_user;
+            }
+        }
+
+    }
+)
 // FUNZIONI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 // funzione che mi permette di generare dei numeri casuali tra un minimo e un massimo.
@@ -65,11 +70,3 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
   }
   
-// funzione che mi permette di verificare se i numeri non siano/siano già stati usati all' interno di uno specifico array.
-function contains(a, obj) {
-    for (var i = 0; i < a.length; i++)
-        if (a[i] === obj) 
-            return true;
-
-        return false;
-}
